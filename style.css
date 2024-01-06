@@ -1,3 +1,77 @@
 *{
-    background-color: red;
+    background-color: rgb(49, 59, 77);
+    margin: 0px;
+    justify-content: center;
+    align-items: center;
+}
+body{
+    height: 100vh;
+    display: flex;
+}
+.select-screen{
+    height: 70vh;
+    width: 40%;
+    min-width: 600px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(69, 90, 114);
+    border-radius: 15px;
+    box-shadow: 5px 5px 30px rgb(0, 0, 0);
+}
+.select-screen>div{
+    width: 90%;
+    height: 60%;
+    display: flex;
+    gap: 8%;
+    background-color: rgb(69, 90, 114);
+}
+.pick-card{
+    width: 30%;
+    height: 60%;
+    border: 6px solid rgb(110, 191, 206);
+    border-radius: 60px;
+    box-shadow: 3px 5px 10px rgb(0, 0, 0);
+    display: flex;
+    font-size: 7rem;
+    color: rgb(110, 191, 206);
+    user-select: none;
+}
+.pick-card:hover{
+    background-color: rgb(110, 191, 206);
+    box-shadow: none;
+}
+.pick-card:active{
+    border: 6px solid rgb(49, 59, 77);
+}
+.active{
+    border: 6px solid rgb(49, 59, 77);
+    background-color: rgb(110, 191, 206);
+    box-shadow: none;
+    color:rgb(69, 90, 114);
+}
+.x:hover{
+    color: rgb(233, 61, 61);
+}
+.o:hover{
+    color:rgb(86, 86, 253);
+}
+button{
+    height: 80px;
+    width: 30%;
+    margin-top: 30px;
+    border: 5px solid rgb(110, 191, 206);
+    color: rgb(110, 191, 206);
+    border-radius: 30px;
+    box-shadow: 3px 5px 10px rgb(0, 0, 0);
+    font-size: 2rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+button:hover{
+    background-color: rgb(110, 191, 206);
+    color: rgb(49, 59, 77);
+    box-shadow: none;
+}
+button:active{
+    border: 5px solid rgb(49, 59, 77);
 }
