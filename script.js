@@ -14,27 +14,40 @@ const game = function () {
                 if (e != element) e.classList.remove('active')
             });
         }));
-        document.querySelector('button').addEventListener('click', ()=>initialize());
+        document.querySelector('button').addEventListener('click', ()=> {
+            if(document.querySelector('.active') != null) initialize()
+        });
     }
-
     const initialize = function (){
         playerchoice = document.querySelector('.active').innerHTML.toLowerCase();
         document.querySelector('body').innerHTML = '';
-        //create outer container
+        document.querySelector('body').innerHTML = '<h1>Tic-Tac-Toe</h1><div class=gameboard></div>';
         for(let i = 0; i < 3; i++){
-            //create flexbox
-           let array = [] 
-            for(let i = 0; i <3; i++){
+            document.querySelector('.gameboard').innerHTML += '<div></div>';
+            let array = [] 
+            for(let j = 0; j < 3; j++){
                 array.push('');
-                //add blank div to flexbox
+                document.querySelector('.gameboard>div:nth-child('+(i+1)+')').innerHTML += '<div class=tile></div>';
             }
             grid.push(array);
         }
+        document.querySelectorAll('.tile').forEach(tile =>{
+            tile.addEventListener('click', ()=>{
+                play();
+            });
+        });
         if (playerchoice = 'x') computerchoice = 'o';
         else computerchoice = 'x';
-        play();
     }
+
     const play = function(){
+        //play should be passed the currently pressed div
+        //inner HTML should be changed to playerchoice.toUpperCase();
+        //listener should be stripped
+        //grid of x/y assigned
+        //winstate checked
+        //if winstate, modal
+        //else run player 2/computer
         gamestate = true;
         while(gamestate){
             let x = prompt('enter first index');
@@ -43,8 +56,9 @@ const game = function () {
             winstate(x,y);
         }
     }
+
     const winstate = function(x, y){
-        let state = grid[x][y];
+        //add a tie check
         if(    (grid[0][0] == state && grid[0][1] == state && grid[0][2] == state) 
             || (grid[1][0] == state && grid[1][1] == state && grid[1][2] == state) 
             || (grid[2][0] == state && grid[2][1] == state && grid[2][2] == state) 
@@ -54,8 +68,8 @@ const game = function () {
             || (grid[0][0] == state && grid[1][1] == state && grid[2][2] == state) 
             || (grid[0][2] == state && grid[1][1] == state && grid[2][2] == state)) 
             gamestate = false;
-            if (state == playerchoice) winner = 'player';
-            else if(state == computerchoice) winner == 'computer';
+            if (grid[x][y] == playerchoice) winner = 'player';
+            else if(grid[x][y] == computerchoice) winner == 'computer';
         return;
     }
     return {initialize, select};

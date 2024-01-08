@@ -7,6 +7,13 @@
 body{
     height: 100vh;
     display: flex;
+    flex-direction: column;
+}
+h1{
+    margin-bottom: 70px;
+    font-size: 5rem;
+    color: rgb(110, 191, 206);
+    text-shadow: 1px 4px 5px rgb(15, 20, 26);
 }
 .select-screen{
     height: 70vh;
@@ -74,4 +81,31 @@ button:hover{
 }
 button:active{
     border: 5px solid rgb(49, 59, 77);
+}
+.gameboard{
+    background-color: rgb(69, 90, 114);
+    border-radius: 15px;
+    box-shadow: 5px 5px 30px rgb(0, 0, 0);
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    padding: 15px;
+    height: 70vh;
+    width: 610px;
+    gap: 8px;
+}
+.gameboard>div{
+    background-color: rgb(69, 90, 114);
+    display: flex;
+    height: 100px;
+    width: 100px;
+    flex-grow: 1;
+    width: 100%;
+    gap: 8px;
+}
+.gameboard>div>div{
+    flex-grow: 1;
+    gap: 8px;
+    height: 100%;
 }
