@@ -46,6 +46,7 @@ h1{
 .pick-card:hover{
     background-color: rgb(110, 191, 206);
     box-shadow: none;
+    color: rgb(49, 59, 77);
 }
 .pick-card:active{
     border: 6px solid rgb(49, 59, 77);
@@ -54,13 +55,7 @@ h1{
     border: 6px solid rgb(49, 59, 77);
     background-color: rgb(110, 191, 206);
     box-shadow: none;
-    color:rgb(69, 90, 114);
-}
-.x:hover{
-    color: rgb(233, 61, 61);
-}
-.o:hover{
-    color:rgb(86, 86, 253);
+    color: rgb(49, 59, 77);
 }
 button{
     height: 80px;
@@ -108,4 +103,19 @@ button:active{
     flex-grow: 1;
     gap: 8px;
     height: 100%;
+    color: rgb(110, 191, 206);
+    display: flex;
+}
+.tile p{
+    position: absolute;
+    font-size: 9rem;
+    resize: none;
+    display: flex;
+    margin-bottom: 25px;
+    user-select: none;
+    background-color: rgba(0,0,0, 0);
+}
+.tile:hover{
+    background-color: rgb(110, 191, 206);
+    color:  rgb(49, 59, 77);
 }
