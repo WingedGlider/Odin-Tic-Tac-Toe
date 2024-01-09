@@ -4,6 +4,9 @@ const game = function () {
     let computerchoice;
     let winner;
     let gamestate;
+    let wincombo;
+    let modal = document.querySelector('dialog');
+    modal.remove();
     const selectscreen = document.querySelector('body').innerHTML;
 
     const select = function (){
@@ -21,6 +24,7 @@ const game = function () {
     
     const initialize = function (){
         gamestate = true;
+        grid = [];
         if (document.querySelector('.active') != null) playerchoice = document.querySelector('.active').innerHTML.toLowerCase();
         document.querySelector('body').innerHTML = '';
         document.querySelector('body').innerHTML = '<h1>Tic-Tac-Toe</h1><div class=gameboard></div>';
@@ -45,15 +49,12 @@ const game = function () {
     const play = function(currentTile){
         currentTile.querySelector('p').innerHTML = playerchoice;
         addTile(currentTile, playerchoice);
-        winstate(currentTile);
-        console.log(gamestate);
-        if (gamestate == false) endScreen();
-        else{ 
+        winstate(playerchoice);
+        if (gamestate != false){
             currentTile = compTurn();
             currentTile.querySelector('p').innerHTML = computerchoice;
             addTile(currentTile, computerchoice)
-            winstate(currentTile); 
-            if (gamestate == false) endScreen();
+            winstate(computerchoice); 
         }
     }
 
@@ -84,25 +85,74 @@ const game = function () {
         return currentTile;
     }
 
-    const winstate = function(currentTile){
-        //add a tie check
-        if(    (grid[0][0] == playerchoice && grid[0][1] == playerchoice && grid[0][2] == playerchoice)
-            || (grid[1][0] == playerchoice && grid[1][1] == playerchoice && grid[1][2] == playerchoice) 
-            || (grid[2][0] == playerchoice && grid[2][1] == playerchoice && grid[2][2] == playerchoice) 
-            || (grid[0][0] == playerchoice && grid[1][0] == playerchoice && grid[2][0] == playerchoice) 
-            || (grid[0][1] == playerchoice && grid[1][1] == playerchoice && grid[2][1] == playerchoice) 
-            || (grid[0][2] == playerchoice && grid[1][2] == playerchoice && grid[2][2] == playerchoice) 
-            || (grid[0][0] == playerchoice && grid[1][1] == playerchoice && grid[2][2] == playerchoice) 
-            || (grid[0][2] == playerchoice && grid[1][1] == playerchoice && grid[2][0] == playerchoice)) 
+    const winstate = function(choice){
+        const gridArray = [];
+        grid.forEach(array => array.forEach(cell => gridArray.push(cell)));
+        let fullcheck = true;
+        gridArray.forEach(tile => {if(tile == '') fullcheck = false});
+        if(    (grid[0][0] == choice && grid[0][1] == choice && grid[0][2] == choice)){
+            wincombo = '123';
             gamestate = false;
-            if (currentTile.querySelector('p').innerHTML == playerchoice) winner = 'You are the winner!';
-            else if(currentTile.querySelector('p').innerHTML == computerchoice) winner == 'The computer took this round...';
+        }
+        else if (grid[1][0] == choice && grid[1][1] == choice && grid[1][2] == choice){
+            wincombo = '456';
+            gamestate = false;
+        }
+        else if (grid[2][0] == choice && grid[2][1] == choice && grid[2][2] == choice){
+            wincombo = '789';
+            gamestate = false;
+        }
+        else if (grid[0][0] == choice && grid[1][0] == choice && grid[2][0] == choice){
+            wincombo = '147';
+            gamestate = false;
+        }
+        else if (grid[0][1] == choice && grid[1][1] == choice && grid[2][1] == choice){
+            wincombo = '258';
+            gamestate = false;
+        }
+        else if (grid[0][2] == choice && grid[1][2] == choice && grid[2][2] == choice){
+            wincombo = '369';
+            gamestate = false;
+        } 
+        else if (grid[0][0] == choice && grid[1][1] == choice && grid[2][2] == choice){
+            wincombo = '159';
+            gamestate = false;
+        }
+        else if(grid[0][2] == choice && grid[1][1] == choice && grid[2][0] == choice){
+            wincombo = '357';
+            gamestate = false;
+        }else if(fullcheck){
+            gamestate = false;
+            wincombo = 'none';
+        }
+            if (choice == playerchoice) winner = 'You are the winner!';
+            else if(choice == computerchoice) winner = 'The computer took this round...';
+            if (fullcheck && wincombo == 'none') winner = 'Game ended with a tie...';
+            if (gamestate == false) endScreen();
         return;
     }
 
     const endScreen = function(){
-        //add the wintext, losetext, or tie text to the screen
-        //+ 2 buttons that decide whether the select screen or game screen is loaded
+        const gridArray = [];
+        const tileArray = [];
+        grid.forEach(array => array.forEach(cell => gridArray.push(cell)));
+        let iterator = 0;
+        document.querySelector('.gameboard').innerHTML = '';
+        for(let i = 0; i < 3; i++){
+            document.querySelector('.gameboard').innerHTML += '<div></div>';
+            for(let j = 0; j < 3; j++){
+                document.querySelector('.gameboard>div:nth-child('+(i+1)+')').innerHTML += '<div class=tile><p>'+gridArray[iterator]+'</p></div>';
+                tileArray.push(document.querySelector('div:nth-child('+(i+1)+')>.tile:nth-child('+(j+1)+')'));
+                if(iterator+1 == wincombo.charAt(j) || iterator+1 == wincombo.charAt(i)) tileArray[iterator].classList.add('active-tile');
+                iterator++;
+            }
+        }
+        document.querySelector('body').innerHTML += '<dialog data-modal>'+modal.innerHTML+'</dialog>';
+        modal = document.querySelector('dialog');
+        modal.showModal();
+        document.querySelector('h1').innerHTML = winner;
+        modal.querySelector('button:nth-child(1)').addEventListener('click', () => initialize());
+        modal.querySelector('button:nth-child(2)').addEventListener('click', () => select());
     }
     return {select};
 }();
